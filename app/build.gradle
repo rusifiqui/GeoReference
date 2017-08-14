@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'rusifiqui'
+            keyPassword 'rusifarules'
+            storeFile file('C:/Kike/owncloud/Trabajo/Android/keystoreGeoReference.jks')
+            storePassword 'rusifarules'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+        applicationId "com.applus.georeference"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.android.support:multidex:1.0.1'
+    compile files('libs/jcoord-1.0.jar')
+    compile files('libs/jxl.jar')
+    // Volley. Servicios web.
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    // GSON. Librería para trabajar con JSON.
+    compile 'com.google.code.gson:gson:2.6.2'
+}

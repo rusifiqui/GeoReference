@@ -1,0 +1,91 @@
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.applus.georeference.activities.MapActivity">
+
+    <ImageButton
+        android:id="@+id/imageButtonOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:src="@android:drawable/ic_menu_more"
+        android:background="@drawable/map_button_shape"
+        android:shadowRadius="3"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowColor="@android:color/black"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/options" />
+
+    <ImageButton
+        android:id="@+id/imageButtonDrawLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:src="@android:drawable/ic_menu_edit"
+        android:background="@drawable/map_button_shape"
+        android:shadowRadius="3"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowColor="@android:color/black"
+        android:layout_marginTop="110dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/add_line" />
+
+    <ImageButton
+        android:id="@+id/imageButtonMeasure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:src="@android:drawable/ic_menu_compass"
+        android:background="@drawable/map_button_shape"
+        android:shadowRadius="3"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowColor="@android:color/black"
+        android:layout_marginTop="160dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/measure_tooltip" />
+
+    <ImageButton
+        android:id="@+id/imageButtonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:src="@android:drawable/ic_menu_delete"
+        android:background="@drawable/map_button_shape"
+        android:shadowRadius="3"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowColor="@android:color/black"
+        android:layout_marginTop="210dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/delete_tooltip" />
+
+    <ImageButton
+        android:id="@+id/imageButtonSync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:src="@android:drawable/ic_menu_rotate"
+        android:background="@drawable/map_button_shape"
+        android:shadowRadius="3"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowColor="@android:color/black"
+        android:layout_marginTop="260dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/sync" />
+
+    </fragment>
+

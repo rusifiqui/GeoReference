@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name">Applus+ GeoReference</string>
+    <string name="title_activity_map">Mapa</string>
+    <string name="title_activity_new_project">Nuevo Proyecto</string>
+    <string name="title_activity_continue_project">Continuar Proyecto</string>
+    <string name="title_activity_select_object">Tipo de objeto a añadir</string>
+    <string name="title_activity_properties">Propiedades</string>
+    <string name="title_activity_settings">Ajustes de la aplicación</string>
+    <string name="title_activity_export_project">Exportación de Proyecto</string>
+    <string name="title_activity_line">Propiedades de la linea</string>
+    <string name="title_activity_object_editor">Gestión de elementos</string>
+    <string name="title_activity_database_settings">Configuración del servidor</string>
+    <string name="title_activity_new_object_type">Nuevo tipo de objeto</string>
+
+
+    <!-- GENERAL -->
+    <string name="dbCreated">Base de datos creada correctamente</string>
+    <string name="dbActualized">Se ha actualizado la base de datos</string>
+    <string name="dbNotActualized">Se ha producido un error al actualizar la base de datos</string>
+    <string name="dbNotUpdatedProperties">Se ha producido un error al actualizar las propiedades</string>
+    <string name="dbErrorUpdatingPoints">Se ha producido un error al actualizar los puntos</string>
+    <string name="loading">Cargando</string>
+    <string name="syncing">Sincronizando</string>
+    <string name="moving_marker">Desplazando marcador</string>
+
+    <!-- Actividad principal -->
+    <string name="new_project">Nuevo Proyecto</string>
+    <string name="continue_project">Continuar Proyecto</string>
+    <string name="settings_button">Ajustes</string>
+    <string name="export_data">Exportar proyecto</string>
+    <string name="logo">Logo de Applus</string>
+    <string name="exit">Presione VOLVER de nuevo para salir</string>
+
+    <!-- Actividad de Mapa -->
+    <string name="dialog_alert_map">Atención</string>
+    <string name="dialog_continue_map">Salir</string>
+    <string name="dialog_cancel_map">Cancelar</string>
+    <string name="dialog_delete_confirmation_map">Eliminar</string>
+    <string name="dialog_text_map">¿Está seguro de que desea abandonar el proyecto actual?</string>
+    <string name="dialog_delete_marker_map">¿Está seguro de que desea eliminar el marcador seleccionado?</string>
+    <string name="dialog_delete_polyline_map">¿Está seguro de que desea eliminar la linea seleccionada?</string>
+    <string name="dialog_sync_project">Se va a cargar el proyecto seleccionado en el servidor, y se eliminarán los datos existentes.\n¿Desea continuar?</string>
+    <string name="dialog_sync_confirm">Sincronizar</string>
+    <string name="add_line">Añadir linea</string>
+    <string name="options">Opciones</string>
+    <string name="measure_tooltip">Medir</string>
+    <string name="sync">Sincronizar</string>
+    <string name="delete_tooltip">Eliminar</string>
+    <string name="map_options">Opciones</string>
+    <string name="line_cancelled">Dibujo de linea cancelado</string>
+    <string name="draw_line">Seleccione los puntos que formarán la linea</string>
+    <string name="select_more_points">Debe seleccionar más de un punto para dibujar una linea</string>
+    <string name="lines_at_selected_point">No se puede eliminar el punto al existir lineas que pasan por él</string>
+    <string name="delete_item">Seleccione el elemento a eliminar</string>
+    <string name="measure">Seleccione los puntos que definirán la medición</string>
+    <string name="added_point">Marcador añadido a la linea</string>
+    <string name="error_deleting_marker">Error al eliminar el marcador</string>
+    <string name="error_deleting_line">Error al eliminar la linea</string>
+    <string name="measured_line_length">Distancia entre los puntos:</string>
+    <string name="copied_to_clipboard">Copiado al portapapeles</string>
+    <string name="sync_ok">La sincronización se ha realizado correctamente</string>
+    <string name="sync_ko">Se ha producido un error al sincronizar el proyecto</string>
+
+    <!-- Actividad Nuevo Proyecto -->
+    <string name="project_name">Nombre del proyecto</string>
+    <string name="project_desc">Descripción del proyecto</string>
+    <string name="create_project">Crear Proyecto</string>
+    <string name="project_created">Proyecto creado correctamente</string>
+    <string name="project_error">Se ha producido un error al crear el proyecto</string>
+
+    <!-- Actividad Seleccionar Proyecto -->
+    <string name="select_project">Seleccione uno de los proyectos disponibles</string>
+    <string name="date">Fecha</string>
+    <string name="name">Nombre</string>
+    <string name="desc">Descipción</string>
+    <string name="dialog_alert">Atención</string>
+    <string name="dialog_continue">Continuar</string>
+    <string name="dialog_accept">Aceptar</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_text">Se va a cargar el proyecto cuya descripción es</string>
+    <string name="dialog_export_text">Se va a exportar el proyecto cuya descripción es</string>
+    <string name="no_email">No se ha definido una dirección de correo para el envío de ficheros. Vaya a Ajustes para definirla.</string>
+    <string name="select_email_app">Seleccione aplicación de envío de email:</string>
+    <string name="project_export">Exportación de Proyecto:</string>
+    <string name="lines_file_name">Lineas</string>
+
+    <!-- Actividad Selección tipo de objeto -->
+    <string name="select_object">Seleccione el tipo de objeto</string>
+    <string name="x">X:</string>
+    <string name="y">Y:</string>
+    <string name="continue_object_select">Continuar</string>
+
+    <!-- Actividad de propiedades de objeto -->
+    <string name="save_properties">Guardar</string>
+
+    <!-- Actividad de preferencias -->
+    <string name="use_location">Usar localización:</string>
+    <string name="use_gps">Usar satélites GPS:</string>
+    <string name="map_style">Tipo de mapa:</string>
+    <string name="map_style_normal">Normal</string>
+    <string name="map_style_hybrid">Híbrido</string>
+    <string name="map_style_satellite">Satélite</string>
+    <string name="map_style_land">Relieve</string>
+    <string name="email_address">Dirección de envío de correos:</string>
+    <string name="database_settings">Ajustes de base de datos:</string>
+    <string name="database_tooltip">Preferencias de conexión a la base de datos</string>
+
+    <!-- Actividad de preferencias de la conexión a la base de datos -->
+    <string name="server">Dirección del servidor:</string>
+    <string name="user">Usuario:</string>
+    <string name="password">Contraseña:</string>
+
+    <!-- Actividad Linea -->
+    <string name="line_name">Nombre de la linea</string>
+    <string name="line_desc">Descripción de la linea</string>
+    <string name="line_length">Longitud de la linea (m)</string>
+    <string name="save_line">Guardar Linea</string>
+    <string name="line_points_number">El total de puntos que forman la linea es</string>
+
+    <!-- Actividad ObjectsActivity -->
+    <string name="delete_object">Seleccione el elemento a eliminar</string>
+    <string name="dialog_delete_object_message">Se va a eliminar el tipo de objeto seleccionado. ¿Desea continuar?</string>
+    <string name="dialog_delete_confirmation">Eliminar</string>
+
+    <!-- Actividad ObjectDetailActivity -->
+    <string name="object_type_name">Nombre del tipo de objeto:</string>
+    <string name="object_type_color">Color del marcador:</string>
+    <string name="object_type_attributes">Propiedades del objeto:</string>
+
+    <!-- Validaciones -->
+    <string name="complete_fields">Debe completar todos los campos para continuar</string>
+
+</resources>
