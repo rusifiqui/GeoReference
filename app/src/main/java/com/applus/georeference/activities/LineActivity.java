@@ -14,7 +14,14 @@ import android.widget.TextView;
 
 import com.applus.georeference.R;
 import com.applus.georeference.entities.Line;
+import com.applus.georeference.helpers.DbHelper;
 
+/**
+ * Clase que corresponde a la actividad de los datos de las lineas.
+ *
+ * 14/08/2017 - EVM - Se añade una nueva funcionalidad para que se puedean añadir puntos a lineas
+ *                    existentes.
+ */
 public class LineActivity extends AppCompatActivity {
 
     private EditText lineName;
@@ -23,10 +30,12 @@ public class LineActivity extends AppCompatActivity {
     private TextView linePointsNum;
 
     private boolean loading = false;
+    private boolean existingLine = false;
     private Button saveLine;
     private Line line;
+    private Line recoveredLine;
 
-    Intent i;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +49,16 @@ public class LineActivity extends AppCompatActivity {
         saveLine = (Button) findViewById(R.id.buttonSaveLine);
 
         getData();
+        recoveredLine = DbHelper.validateLineExistence(line, getApplicationContext());
         loadData();
+
+        // Si la linea ya existía previamente, se deshabilitan los campos.
+        if(existingLine){
+            lineName.setEnabled(false);
+            lineDesc.setEnabled(false);
+            lineLength.setEnabled(false);
+            linePointsNum.setEnabled(false);
+        }
 
         if(loading && saveLine != null){
             saveLine.setEnabled(false);
@@ -128,17 +146,27 @@ public class LineActivity extends AppCompatActivity {
      * Método que carga la información en los campos de la pantalla
      */
     private void loadData(){
-        if(line.getName() != null && line.getName().length() > 0){
-            lineName.setText(line.getName());
-        }
-        if(line.getDesc() != null && line.getDesc().length() > 0){
-            lineDesc.setText(line.getDesc());
-        }
-        if(line.getLength() > 0){
-            lineLength.setText(String.valueOf(line.getLength()));
-        }
-        if(line.getPoints() != null && line.getPoints().size() > 0){
-            String t = getResources().getString(R.string.line_points_number) + ": " + line.getPoints().size();
+
+        if(loading || recoveredLine == null) {
+            if (line.getName() != null && line.getName().length() > 0) {
+                lineName.setText(line.getName());
+            }
+            if (line.getDesc() != null && line.getDesc().length() > 0) {
+                lineDesc.setText(line.getDesc());
+            }
+            if (line.getLength() > 0) {
+                lineLength.setText(String.valueOf(line.getLength()));
+            }
+            if (line.getPoints() != null && line.getPoints().size() > 0) {
+                String t = getResources().getString(R.string.line_points_number) + ": " + line.getPoints().size();
+                linePointsNum.setText(t);
+            }
+        }else{
+            existingLine = true;
+            lineName.setText(recoveredLine.getName());
+            lineDesc.setText(recoveredLine.getDesc());
+            lineLength.setText(String.valueOf(recoveredLine.getLength() + line.getLength()));
+            String t = getResources().getString(R.string.line_points_number) + ": " + (recoveredLine.getPoints().size()-1 + line.getPoints().size());
             linePointsNum.setText(t);
         }
     }
@@ -147,6 +175,10 @@ public class LineActivity extends AppCompatActivity {
      * Método que almacena las propiedades introducidas por el usuario y devuelve el control al mapa.
      */
     private void saveData(){
+        // Si se ha recuperado una linea, se debe utilizar este id.
+        if(recoveredLine != null)
+            line.setIdLine(recoveredLine.getIdLine());
+
         line.setName(lineName.getText().toString());
         line.setDesc(lineDesc.getText().toString());
         line.setLength(Float.valueOf(lineLength.getText().toString()));

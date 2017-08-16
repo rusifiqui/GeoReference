@@ -40,8 +40,8 @@ public class ObjectActivity extends AppCompatActivity {
 
     private DatePickerDialog fromDatePickerDialog;
 
-    private String myFormat = "dd/MM/yyyy";
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat(myFormat, Locale.US);
+    private final String myFormat = "dd/MM/yyyy";
+    private final SimpleDateFormat dateFormatter = new SimpleDateFormat(myFormat, Locale.US);
 
     private int selected;
     private long objectId;

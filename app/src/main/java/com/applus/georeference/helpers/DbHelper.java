@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Location;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.applus.georeference.R;
@@ -30,10 +31,13 @@ import uk.me.jstott.jcoord.UTMRef;
  * @author jvilam
  * @version 1
  * @since 02/09/2016
+ *
+ * 14/08/2017 - EVM - Se modifican los métodos getIdUserObject y setIdUserObject por un error ortográfico en el nombre.
+ *                    Creación de los métodos "validateLineExistence" y "getLineData".
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    private Context c;
+    private final Context c;
     public static final String DATABASE_NAME = "APPLUSGEO.db";
     public static final int DATABASE_VERSION = 1;
 
@@ -533,7 +537,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 uo.put(KEY_DESC, u.getDescription());
 
             idUo = db.insert(DATABASE_TABLE_USER_OBJECT, null, uo);
-            u.setIdUsertObject(idUo);
+            u.setIdUserObject(idUo);
             opd.setIdObject(idUo);
 
             // Se guardan las propiedades del objeto
@@ -565,7 +569,7 @@ public class DbHelper extends SQLiteOpenHelper {
             DbHelper dbHelper = new DbHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
             db = dbHelper.getWritableDatabase();
 
-            String where = KEY_ID_USER_OBJECT + " = " + u.getIdUsertObject();
+            String where = KEY_ID_USER_OBJECT + " = " + u.getIdUserObject();
 
             ContentValues uo = new ContentValues();
             uo.put(KEY_LAT, String.valueOf(u.getLat()));
@@ -608,7 +612,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     for (int i = 0; i < c.getColumnCount(); i++) {
                         switch (c.getColumnName(i)) {
                             case KEY_ID_USER_OBJECT:
-                                o.setIdUsertObject(c.getLong(i));
+                                o.setIdUserObject(c.getLong(i));
                                 break;
                             case KEY_CREATE_DATE:
                                 o.setCreateDate(c.getString(i));
@@ -649,7 +653,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param opd El objeto con toda la información
      * @param c el contexto
      */
-    private static boolean saveObjectProperties(ObjectPropertiesData opd, Context c){
+    private static void saveObjectProperties(ObjectPropertiesData opd, Context c){
 
         // Se recuperan las propiedades y los valores.
         Vector<ObjectPropertie> p = opd.getP();
@@ -671,7 +675,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
                 idInsert = db.insert(DATABASE_TABLE_USER_OBJECT_PROPERTIES, null, uo);
                 if (idInsert == -1 || idInsert == 0) {
-                    return false;
+                    throw new Exception(c.getString(R.string.e_object_properties));
                 }
             }
         }catch (Exception e) {
@@ -680,7 +684,6 @@ public class DbHelper extends SQLiteOpenHelper {
             if(db != null)
                 db.close();
         }
-            return true;
     }
 
     /**
@@ -794,18 +797,24 @@ public class DbHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = null;
         try {
+
             DbHelper dbHelper = new DbHelper(c, DATABASE_NAME, null, DATABASE_VERSION);
             db = dbHelper.getWritableDatabase();
 
             // Primero se inserta la nueva linea
             ContentValues cV = new ContentValues();
-            cV.put(KEY_ID_PROJECT, l.getIdProject());
-            cV.put(KEY_ID_LINE_NAME, l.getName());
-            cV.put(KEY_ID_LINE_LENGTH, l.getLength());
-            cV.put(KEY_ID_LINE_DESC, l.getDesc());
 
-            long idLine = db.insert(DATABASE_TABLE_LINES, null, cV);
-            l.setIdLine(idLine);
+            long idLine = l.getIdLine();
+            if(idLine == 0) {
+
+                cV.put(KEY_ID_PROJECT, l.getIdProject());
+                cV.put(KEY_ID_LINE_NAME, l.getName());
+                cV.put(KEY_ID_LINE_LENGTH, l.getLength());
+                cV.put(KEY_ID_LINE_DESC, l.getDesc());
+
+                idLine = db.insert(DATABASE_TABLE_LINES, null, cV);
+                l.setIdLine(idLine);
+            }
 
             if(idLine != -1 && idLine != 0){
                 // Se inserta cada uno de los puntos que forman la linea
@@ -813,7 +822,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     UserObject uo = l.getPoints().get(i);
                     cV = new ContentValues();
                     cV.put(KEY_ID_LINE, idLine);
-                    cV.put(KEY_ID_USER_OBJECT, uo.getIdUsertObject());
+                    cV.put(KEY_ID_USER_OBJECT, uo.getIdUserObject());
                     long idP = db.insert(DATABASE_TABLE_POINTS, null, cV);
                     if (idP == -1 || idP == 0) {
                         return false;
@@ -827,6 +836,98 @@ public class DbHelper extends SQLiteOpenHelper {
                 db.close();
         }
         return true;
+    }
+
+    /**
+     * Método que valida si alguno de los puntos de una linea está asociado ya a otra linea a la hora
+     * de guardar. En caso afirmativo, se devuelven los datos generales de esa linea.
+     * @param l La linea de la que se desean validar los puntos
+     * @param context El contexto
+     * @return Una linea en caso de pertenecer algún punto a esa linea. NULL en caso contrario.
+     */
+    @Nullable
+    public static Line validateLineExistence(Line l, Context context){
+
+        DbHelper dbHelper = new DbHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = null;
+        String sql = "";
+
+        for(int i = 0; i < l.getPoints().size(); i++){
+            sql = sql + l.getPoints().get(i).getIdUserObject() + ", ";
+        }
+        sql = sql.substring(0, sql.length()-2);
+        sql = " IN (" + sql + ")";
+
+        try{
+            c = db.rawQuery("SELECT " + KEY_ID_LINE + " FROM " + DATABASE_TABLE_POINTS + " WHERE " +
+                    KEY_ID_USER_OBJECT + sql , null);
+            if(c.moveToNext()){
+                return(getLineData(c.getLong(0), context));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            if(c != null)
+                c.close();
+            if(db != null)
+                db.close();
+        }
+        return null;
+    }
+
+    /**
+     * Método que devuelve la información general de una linea.
+     * @param id El id de la linea
+     * @param context El contexto
+     * @return La la linea si existe, null en caso contrario
+     */
+    @Nullable
+    private static Line getLineData(Long id, Context context){
+        DbHelper dbHelper = new DbHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = null;
+        Line l = new Line();
+
+        try{
+            c = db.rawQuery("SELECT * FROM " + DATABASE_TABLE_LINES + " WHERE " +
+                    KEY_ID_LINE + " = ?" , new String[]{String.valueOf(id)});
+
+            while (c.moveToNext()) {
+
+                // Se recuperan los datos de la linea.
+                for (int i = 0; i < c.getColumnCount(); i++) {
+                    switch (c.getColumnName(i)) {
+                        case KEY_ID_LINE:
+                            l.setIdLine(c.getLong(i));
+                            break;
+                        case KEY_ID_PROJECT:
+                            l.setIdProject(c.getLong(i));
+                            break;
+                        case KEY_ID_LINE_NAME:
+                            l.setName(c.getString(i));
+                            break;
+                        case KEY_ID_LINE_LENGTH:
+                            l.setLength(c.getFloat(i));
+                            break;
+                        case KEY_ID_LINE_DESC:
+                            l.setDesc(c.getString(i));
+                            break;
+                    }
+                }
+            }
+            // Se recuperan los puntos de la linea.
+            getLinePoints(l, context);
+            return l;
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            if(c != null)
+                c.close();
+            if(db != null)
+                db.close();
+        }
+        return null;
     }
 
     /**
@@ -925,7 +1026,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     for (int i = 0; i < c.getColumnCount(); i++) {
                         switch (c.getColumnName(i)) {
                             case KEY_ID_USER_OBJECT:
-                                o.setIdUsertObject(c.getLong(i));
+                                o.setIdUserObject(c.getLong(i));
                                 break;
                             case KEY_CREATE_DATE:
                                 o.setCreateDate(c.getString(i));

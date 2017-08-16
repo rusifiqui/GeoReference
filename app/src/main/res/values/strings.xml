@@ -130,4 +130,6 @@
     <!-- Validaciones -->
     <string name="complete_fields">Debe completar todos los campos para continuar</string>
 
+    <!-- Excepciones -->
+    <string name="e_object_properties">Error al guardar las propiesdades del objeto</string>
 </resources>

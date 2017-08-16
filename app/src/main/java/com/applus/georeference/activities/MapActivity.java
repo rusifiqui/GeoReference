@@ -93,8 +93,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private boolean gpsEnabled;
 
     // Variables para la localización.
-    LocationManager locationManager;
-    LocationListener locationListener;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
     // Variable que indica si se está dibujando una linea
     private boolean drawingLine = false;
@@ -360,7 +360,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public boolean onMarkerClick(Marker marker) {
                 // Si está activa la herramienta de eliminar, se elimina el marcador, si el usuario lo confirma.
                 if(deletingElement){
-                    showDeleteMarkerDialog(userObjects.get(marker.getId()).getIdUsertObject());
+                    showDeleteMarkerDialog(userObjects.get(marker.getId()).getIdUserObject());
                 }
                 if(measuring){
                     measure(marker);
@@ -750,7 +750,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         DbHelper.updateUserObjectPosition(uo, getApplicationContext());
 
         // Se actualizan las posibles lineas que pasen por el marcador que ha sido desplazado.
-        updatePolylinePoints(uo.getIdUsertObject());
+        updatePolylinePoints(uo.getIdUserObject());
     }
 
     /**
@@ -763,7 +763,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         intent.putExtra("OBJECT_TYPES", objectTypes);
         intent.putExtra("OBJECT_PROPERTIES", objectPropertiesNames);
         intent.putExtra("SELECTED", u.getType());
-        intent.putExtra("OBJECT_ID", u.getIdUsertObject());
+        intent.putExtra("OBJECT_ID", u.getIdUserObject());
         startActivityForResult(intent, SHOW_OBJECT_FOR_UPDATE);
     }
 

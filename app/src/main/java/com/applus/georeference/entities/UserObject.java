@@ -9,10 +9,12 @@ import java.io.Serializable;
  * @version 1
  * @author Enrique Vila
  * @since 02/09/2016
+ *
+ * 14/08/2017 - EVM - Se modifican los métodos getIdUserObject y setIdUserObject por un error ortográfico en el nombre.
  */
 
 public class UserObject implements Serializable{
-    private long idUsertObject;
+    private long idUserObject;
     private String createDate;
     private long idProject;
     private Double lat;
@@ -20,12 +22,12 @@ public class UserObject implements Serializable{
     private int type;
     private String description;
 
-    public long getIdUsertObject() {
-        return idUsertObject;
+    public long getIdUserObject() {
+        return idUserObject;
     }
 
-    public void setIdUsertObject(long idUsertObject) {
-        this.idUsertObject = idUsertObject;
+    public void setIdUserObject(long idUsertObject) {
+        this.idUserObject = idUsertObject;
     }
 
     public String getCreateDate() {
