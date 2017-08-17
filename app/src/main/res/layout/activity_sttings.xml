@@ -177,8 +177,7 @@
             app:srcCompat="@drawable/database"
             android:id="@+id/imageButtonDatabaseProperties"
             android:foregroundGravity="right"
-            android:contentDescription="@string/database_tooltip" />
-
+            android:contentDescription="@string/ac_database" />
 
     </LinearLayout>
 </RelativeLayout>

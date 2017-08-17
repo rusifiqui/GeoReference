@@ -22,6 +22,8 @@
     <string name="loading">Cargando</string>
     <string name="syncing">Sincronizando</string>
     <string name="moving_marker">Desplazando marcador</string>
+    <string name="ac_add_element">Añadir elemento</string>
+    <string name="ac_delete_element">Eliminar elemento</string>
 
     <!-- Actividad principal -->
     <string name="new_project">Nuevo Proyecto</string>
@@ -30,6 +32,7 @@
     <string name="export_data">Exportar proyecto</string>
     <string name="logo">Logo de Applus</string>
     <string name="exit">Presione VOLVER de nuevo para salir</string>
+    <string name="ac_settings_button">Menú de ajustes</string>
 
     <!-- Actividad de Mapa -->
     <string name="dialog_alert_map">Atención</string>
@@ -103,7 +106,7 @@
     <string name="map_style_land">Relieve</string>
     <string name="email_address">Dirección de envío de correos:</string>
     <string name="database_settings">Ajustes de base de datos:</string>
-    <string name="database_tooltip">Preferencias de conexión a la base de datos</string>
+    <string name="ac_database">Preferencias de conexión a la base de datos</string>
 
     <!-- Actividad de preferencias de la conexión a la base de datos -->
     <string name="server">Dirección del servidor:</string>

@@ -499,6 +499,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             // Se crea un nuevo vector para la siguiente linea
                             lineMarkers = new Vector<>();
                         }
+                        mMap.clear();
+                        // Se recarga el mapa para que se muestre correctamente el número de puntos
+                        // de la linea del nuevo segmento que se ha añadido.
+                        loadData();
                         break;
 
                     // Se ha actualizado una linea
